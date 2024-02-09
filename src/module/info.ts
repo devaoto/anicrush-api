@@ -20,6 +20,10 @@ interface Info {
     sub?: number;
     dub?: number;
   };
+  episodes?: {
+    id: string;
+    episodeNumber: number;
+  }[];
   characters?: Character[];
 }
 
@@ -125,6 +129,21 @@ export const fetchInfo = async (id: string): Promise<Info> => {
         voiceActorImages,
       });
     });
+
+    const episodes: { id: string; episodeNumber: number }[] = [];
+
+    for (
+      let episodeNumber = 1;
+      episodeNumber <= totalEpisodesSub;
+      episodeNumber++
+    ) {
+      const episodeId = `${id}?ep=${episodeNumber}`;
+      episodes.push({
+        id: episodeId,
+        episodeNumber,
+      });
+    }
+
     await browser.close();
 
     return {
@@ -140,6 +159,7 @@ export const fetchInfo = async (id: string): Promise<Info> => {
       quality,
       characters: characterData,
       totalEpisodes,
+      episodes,
       genres,
       studios,
       producers,
