@@ -3,8 +3,12 @@
   "version": "0.1.0",
   "description": "An API that scrapes data from \"anicrush.to\"",
   "main": "build/index.js",
+  "types": "build/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepare": "tsc",
+    "build": "tsc",
+    "test": "tsc && ts-node test/index.ts",
+    "test:js": "tsc && node test/index.js"
   },
   "repository": {
     "type": "git",
