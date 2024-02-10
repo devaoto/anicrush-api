@@ -1,11 +1,27 @@
-import { fetchInfo } from './module/info';
-import { fetchPopular } from './module/popular';
-import { search } from './module/search';
+import {
+  type SearchData,
+  type PopularData,
+  type Info,
+  fetchInfo,
+  fetchPopular,
+  search,
+} from './module';
 
-(async () => {
-  const fetchedPopular = fetchPopular();
-  const fetchedSearch = search('鬼滅の刃');
-  const fetchedInfo = await fetchInfo('classroom-of-the-elite-iii.O04Tut');
-  console.log(fetchedInfo);
-  console.log(await Promise.all([fetchedSearch, fetchedPopular]));
-})();
+export default class AniCrush {
+  private userAgent: string | undefined;
+  constructor(userAgent?: string) {
+    this.userAgent = userAgent;
+  }
+
+  public async fetchPopular(): Promise<PopularData[]> {
+    return await fetchPopular(this.userAgent);
+  }
+
+  public async performSearch(query: string): Promise<SearchData[]> {
+    return await search(query, this.userAgent);
+  }
+
+  public async fetchInfo(id: string): Promise<Info> {
+    return await fetchInfo(id, this.userAgent);
+  }
+}
