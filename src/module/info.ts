@@ -1,6 +1,7 @@
 import puppeteer from 'puppeteer';
 import waitFor from '../utils/waitFor';
 import { load } from 'cheerio';
+import repeat from 'repeat.js';
 
 interface Info {
   id?: string;
@@ -132,17 +133,13 @@ export const fetchInfo = async (id: string): Promise<Info> => {
 
     const episodes: { id: string; episodeNumber: number }[] = [];
 
-    for (
-      let episodeNumber = 1;
-      episodeNumber <= totalEpisodesSub;
-      episodeNumber++
-    ) {
-      const episodeId = `${id}?ep=${episodeNumber}`;
+    repeat((episodeNumber: number) => {
+      const episodeId = `${id}?ep=${episodeNumber + 1}`;
       episodes.push({
         id: episodeId,
-        episodeNumber,
+        episodeNumber: episodeNumber + 1,
       });
-    }
+    }, totalEpisodesSub);
 
     await browser.close();
 
