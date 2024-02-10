@@ -2,7 +2,7 @@ import puppeteer from 'puppeteer';
 import waitFor from '../utils/waitFor';
 import { load } from 'cheerio';
 
-interface SearchData {
+export interface SearchData {
   id?: string;
   title?: string;
   image?: string;
@@ -14,7 +14,7 @@ interface SearchData {
   };
 }
 
-export const search = async (query: string) => {
+export const search = async (query: string, userAgent?: string) => {
   try {
     const browser = await puppeteer.launch({ headless: 'shell' });
 
@@ -22,9 +22,14 @@ export const search = async (query: string) => {
 
     const page = await browser.newPage();
 
-    await page.setUserAgent(
-      'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36'
-    );
+    let ua: string;
+
+    if (userAgent) ua = userAgent;
+    else
+      ua =
+        'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36';
+
+    await page.setUserAgent(ua);
 
     await page.goto(`https://anicrush.to/search?keyword=${query}`);
 
@@ -61,7 +66,7 @@ export const search = async (query: string) => {
       searchData.push({ id, title, image, type, duration, totalEpisodes });
     });
 
-    await browser.close()
+    await browser.close();
 
     return searchData;
   } catch (error) {

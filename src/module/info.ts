@@ -3,7 +3,7 @@ import waitFor from '../utils/waitFor';
 import { load } from 'cheerio';
 import repeat from 'repeat.js';
 
-interface Info {
+export interface Info {
   id?: string;
   title?: string;
   titleJapanese?: string;
@@ -35,7 +35,10 @@ interface Character {
   voiceActorImages?: string[];
 }
 
-export const fetchInfo = async (id: string): Promise<Info> => {
+export const fetchInfo = async (
+  id: string,
+  userAgent?: string
+): Promise<Info> => {
   try {
     const browser = await puppeteer.launch({ headless: 'shell' });
     const page = await browser.newPage();
@@ -45,9 +48,14 @@ export const fetchInfo = async (id: string): Promise<Info> => {
     let studios: string[] | undefined = [];
     let producers: string[] | undefined = [];
 
-    await page.setUserAgent(
-      'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36'
-    );
+    let ua: string;
+
+    if (userAgent) ua = userAgent;
+    else
+      ua =
+        'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36';
+
+    await page.setUserAgent(ua);
 
     await page.goto(`https://anicrush.to/detail/${id}`);
 

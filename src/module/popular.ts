@@ -2,7 +2,7 @@ import puppeteer from 'puppeteer';
 import waitFor from '../utils/waitFor';
 import { load } from 'cheerio';
 
-interface PopularData {
+export interface PopularData {
   id?: string;
   title?: string;
   image?: string;
@@ -13,17 +13,21 @@ interface PopularData {
   };
 }
 
-export const fetchPopular = async () => {
+export const fetchPopular = async (userAgent?: string) => {
   try {
     const browser = await puppeteer.launch({ headless: 'shell' });
 
     let popularData: PopularData[] = [];
 
     const page = await browser.newPage();
+    let ua: string;
 
-    await page.setUserAgent(
-      'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36'
-    );
+    if (userAgent) ua = userAgent;
+    else
+      ua =
+        'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36';
+
+    await page.setUserAgent(ua);
 
     await page.goto('https://anicrush.to/most-popular');
 
