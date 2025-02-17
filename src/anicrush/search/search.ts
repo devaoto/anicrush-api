@@ -79,7 +79,8 @@ export const search = async (query: string, page: number = 1, limit: number = 20
                 name: genre?.name || "",
                 slug: genre?.slug || ""
             })) || [],
-            id: `${item.slug}.${item.id}`
+            id: item.id,
+            urlId: `${item.slug}.${item.id}`
         })),
         pagination: {
             currentPage: page,
