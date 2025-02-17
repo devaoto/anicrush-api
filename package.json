@@ -2,6 +2,9 @@
   "name": "anicrush-api",
   "module": "src/main.ts",
   "type": "module",
+  "scripts": {
+    "start": "bun run src/main.ts"
+  },
   "devDependencies": {
     "@types/bun": "latest",
     "@types/express": "^5.0.0"
