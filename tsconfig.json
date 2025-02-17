@@ -2,7 +2,7 @@
   "compilerOptions": {
     // Enable latest features
     "lib": ["ESNext", "DOM"],
-    "target": "ESNext",
+    "target": "ESNext", 
     "module": "ESNext",
     "moduleDetection": "force",
     "jsx": "react-jsx",
@@ -22,6 +22,10 @@
     // Some stricter flags (disabled by default)
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "noPropertyAccessFromIndexSignature": false
+    "noPropertyAccessFromIndexSignature": false,
+
+    // Decorator support
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   }
 }

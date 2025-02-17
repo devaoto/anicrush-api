@@ -12,6 +12,7 @@
   "dependencies": {
     "@nestjs/common": "^11.0.9",
     "@nestjs/core": "^11.0.9",
+    "@nestjs/platform-express": "^11.0.10",
     "cheerio": "^1.0.0",
     "express": "^4.21.2",
     "ky": "^1.7.5",

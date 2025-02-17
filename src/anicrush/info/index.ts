@@ -11,5 +11,4 @@ export * from "./types";
 
 export { getDetail, getEpisodes, getCharacters };
 
-console.dir(await getInfo("vRPjMA"), { depth: null });
-
+// console.dir(await getInfo("vRPjMA"), { depth: null });
