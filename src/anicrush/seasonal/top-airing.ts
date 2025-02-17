@@ -36,6 +36,7 @@ export const getTopAiring = async (limit: number = 20) => {
                 name: genre?.name ?? "",
                 slug: genre?.slug ?? ""
             })) ?? [],
+            urlId: `${item.slug}.${item.id}`,
             id: item.id
         })),
         pagination: {

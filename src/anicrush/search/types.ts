@@ -64,6 +64,7 @@ const formattedSearchItemSchema = z.object({
   malScore: z.number().nullable(),
   genres: formattedSearchGenreSchema.array(),
   id: z.string(),
+  urlId: z.string(),
 });
 
 export const formattedSearchResponseSchema = z.object({

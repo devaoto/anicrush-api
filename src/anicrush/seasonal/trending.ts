@@ -36,7 +36,8 @@ export const getTrending = async (limit?: number) => {
                 name: genre?.name ?? "",
                 slug: genre?.slug ?? ""
             })) ?? [],
-            id: `${item.slug}.${item.id}`
+            urlId: `${item.slug}.${item.id}`,
+            id: item.id
         })),
         pagination: {
             currentPage,

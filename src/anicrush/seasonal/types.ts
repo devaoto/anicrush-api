@@ -54,6 +54,7 @@ const formattedSeasonalItemSchema = z.object({
   ratingType: z.string(),
   genres: formattedGenreSchema.array(),
   id: z.string(),
+  urlId: z.string(),
 });
 
 export const formattedSeasonalResponseSchema = z.object({
