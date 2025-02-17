@@ -33,7 +33,8 @@ export const searchAutoComplete = async (query: string) => {
                 name: genre?.name || "",
                 slug: genre?.slug || ""
             })) || [],
-            id: `${item.slug}.${item.id}`
+            urlId: `${item.slug}.${item.id}`,
+            id: item.id
         })),
         pagination: {
             currentPage: 1, // Search autocomplete is always one.
