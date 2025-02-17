@@ -1,43 +1,21 @@
 {
   "name": "anicrush-api",
-  "version": "0.1.0",
-  "description": "An API that scrapes data from \"anicrush.to\"",
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
-  "scripts": {
-    "prepare": "tsc",
-    "build": "tsc",
-    "test": "tsc && ts-node test/index.ts",
-    "test:js": "tsc && node test/index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/codeblitz97/anicrush-api.git"
-  },
-  "keywords": [
-    "Anicrush",
-    "Aniwatch",
-    "Scraper",
-    "Module",
-    "TypeScript",
-    "AniCrush",
-    "API"
-  ],
-  "author": "Mohtasim Alam Sohom",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/codeblitz97/anicrush-api/issues"
-  },
-  "homepage": "https://github.com/codeblitz97/anicrush-api#readme",
+  "module": "src/main.ts",
+  "type": "module",
   "devDependencies": {
-    "@types/node": "^20.11.17",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "@types/bun": "latest",
+    "@types/express": "^5.0.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
   },
   "dependencies": {
-    "axios": "^1.6.7",
-    "cheerio": "^1.0.0-rc.12",
-    "puppeteer": "^22.0.0",
-    "repeat.js": "github:codeblitz97/repeat.js"
+    "@nestjs/common": "^11.0.9",
+    "@nestjs/core": "^11.0.9",
+    "cheerio": "^1.0.0",
+    "express": "^4.21.2",
+    "ky": "^1.7.5",
+    "reflect-metadata": "^0.2.2",
+    "zod": "^3.24.2"
   }
 }
