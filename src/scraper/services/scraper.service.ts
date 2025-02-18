@@ -7,10 +7,11 @@ import {
   getEpisodes,
   search 
 } from '../../anicrush';
+import { getSources } from '../../anicrush/sources/sources';
+import type { SourceServer } from '../../anicrush/sources/types';
 
 @Injectable()
 export class ScraperService {
-  // TODO: Implement scraping logic
   async scrapeWebsite(url: string): Promise<any> {
     return { status: 'TODO', url, data: null };
   }
@@ -37,5 +38,9 @@ export class ScraperService {
 
   async searchAnime(query: string, page: number, limit: number) {
     return search(query, page, limit);
+  }
+
+  async getSources(id: string, episode: number, audioType: "sub" | "dub" = "sub", serverName: SourceServer) {
+    return getSources(id, episode, audioType, serverName);
   }
 } 

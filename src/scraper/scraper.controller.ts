@@ -1,6 +1,7 @@
 import { Controller, Get, Query, Param } from '@nestjs/common';
 import { formatResponse } from '../common/helpers/response.helper';
 import { ScraperService } from './services/scraper.service';
+import type { SourceServer } from '../anicrush/sources/types';
 
 @Controller('scraper')
 export class ScraperController {
@@ -54,5 +55,11 @@ export class ScraperController {
   ) {
     const data = await this.scraperService.searchAnime(query, page, limit);
     return formatResponse('Search results retrieved successfully', data);
+  }
+
+  @Get("sources/:id")
+  async getSources(@Param("id") id: string, @Query("episode") episode: number, @Query("audioType") audioType: "sub" | "dub" = "sub", @Query("serverName") serverName: SourceServer) {
+    const data = await this.scraperService.getSources(id, episode, audioType, serverName);
+    return formatResponse("Sources retrieved successfully", data);
   }
 } 
