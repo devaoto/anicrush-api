@@ -8,7 +8,8 @@
   "devDependencies": {
     "@types/bun": "latest",
     "@types/crypto-js": "^4.2.2",
-    "@types/express": "^5.0.0"
+    "@types/express": "^5.0.0",
+    "dotenv": "^16.4.7"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
@@ -20,7 +21,9 @@
     "cheerio": "^1.0.0",
     "crypto-js": "^4.2.0",
     "express": "^4.21.2",
+    "ioredis": "^5.5.0",
     "ky": "^1.7.5",
+    "lru-cache": "^11.0.2",
     "reflect-metadata": "^0.2.2",
     "zod": "^3.24.2"
   }

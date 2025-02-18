@@ -5,10 +5,14 @@ import {
   getInfo,
   getCharacters,
   getEpisodes,
-  search 
+  search,
+  getSources,
+  type FormattedSeasonalResponse,
+  type SearchResponse,
+  type ExtractedSrc
 } from '../../anicrush';
-import { getSources } from '../../anicrush/sources/sources';
 import type { SourceServer } from '../../anicrush/sources/types';
+import { Cache } from '../../cache';
 
 @Injectable()
 export class ScraperService {
@@ -16,31 +20,85 @@ export class ScraperService {
     return { status: 'TODO', url, data: null };
   }
 
-  async getTrending(page: number, limit: number) {
-    return getTrending(limit);
+  // Trending with 3h cache
+  async getTrending(page: number, limit: number): Promise<FormattedSeasonalResponse> {
+    const cacheKey = `trending:${page}:${limit}`;
+    const cached = await Cache.get<FormattedSeasonalResponse>(cacheKey);
+    if (cached) return cached;
+    
+    const data = await getTrending(limit);
+    await Cache.set(cacheKey, data, 10800); // 3 hours
+    return data;
   }
 
-  async getTopAiring(page: number, limit: number) {
-    return getTopAiring(limit);
+  // Top Airing with 3h cache
+  async getTopAiring(page: number, limit: number): Promise<FormattedSeasonalResponse> {
+    const cacheKey = `top-airing:${page}:${limit}`;
+    const cached = await Cache.get<FormattedSeasonalResponse>(cacheKey);
+    if (cached) return cached;
+
+    const data = await getTopAiring(limit);
+    await Cache.set(cacheKey, data, 10800);
+    return data;
   }
 
-  async getAnimeInfo(id: string) {
-    return getInfo(id);
+  // Anime Info with 12h cache
+  async getAnimeInfo(id: string): Promise<any> {
+    const cacheKey = `info:${id}`;
+    const cached = await Cache.get<any>(cacheKey);
+    if (cached) return cached;
+
+    const data = await getInfo(id);
+    await Cache.set(cacheKey, data, 43200); // 12 hours
+    return data;
   }
 
-  async getCharacters(id: string, page: number, limit: number) {
-    return getCharacters(id, limit, page);
+  // Characters with 3h cache
+  async getCharacters(id: string, page: number, limit: number): Promise<any> {
+    const cacheKey = `characters:${id}:${page}:${limit}`;
+    const cached = await Cache.get<any>(cacheKey);
+    if (cached) return cached;
+
+    const data = await getCharacters(id, limit, page);
+    await Cache.set(cacheKey, data, 10800);
+    return data;
   }
 
-  async getEpisodes(id: string) {
-    return getEpisodes(id);
+  // Episodes with 1h cache
+  async getEpisodes(id: string): Promise<any> {
+    const cacheKey = `episodes:${id}`;
+    const cached = await Cache.get<any>(cacheKey);
+    if (cached) return cached;
+
+    const data = await getEpisodes(id);
+    await Cache.set(cacheKey, data, 3600);
+    return data;
   }
 
-  async searchAnime(query: string, page: number, limit: number) {
-    return search(query, page, limit);
+  // Search with 3h cache
+  async searchAnime(query: string, page: number, limit: number): Promise<SearchResponse> {
+    const cacheKey = `search:${query}:${page}:${limit}`;
+    const cached = await Cache.get<SearchResponse>(cacheKey);
+    if (cached) return cached;
+
+    const data = await search(query, page, limit);
+    await Cache.set(cacheKey, data, 10800);
+    return data;
   }
 
-  async getSources(id: string, episode: number, audioType: "sub" | "dub" = "sub", serverName: SourceServer) {
-    return getSources(id, episode, audioType, serverName);
+  // Sources with 1h cache
+  async getSources(
+    id: string,
+    episode: number,
+    audioType: "sub" | "dub" = "sub",
+    serverName: SourceServer
+  ): Promise<ExtractedSrc> {
+    const cacheKey = `sources:${id}:${episode}:${audioType}:${serverName}`;
+    const cached = await Cache.get<ExtractedSrc>(cacheKey);
+    if (cached) return cached;
+
+    const data = await getSources(id, episode, audioType, serverName);
+    await Cache.set(cacheKey, data, 3600);
+    return data;
   }
 } 
